@@ -18,7 +18,7 @@ public class GWTServiceUsageExample extends VerticalPanel {
     private Button btnSend = new Button("Send to server");
 
     public GWTServiceUsageExample() {
-        add(new Label("Bus schedule: "));
+        add(new Label("Input: "));
         add(txtUserInput);
         add(btnSend);
         add(lblServerReply);
