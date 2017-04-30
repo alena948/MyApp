@@ -32,12 +32,12 @@ public class Main implements EntryPoint {
 
         // Create a ListBox, giving it a name and some values to be associated with
         // its options.
-        ListBox lb = new ListBox();
+        /*ListBox lb = new ListBox();
         lb.setName("listBoxFormElement");
         lb.addItem("foo", "fooValue");
         lb.addItem("bar", "barValue");
         lb.addItem("baz", "bazValue");
-        panel.add(lb);
+        panel.add(lb);*/
 
         // Create a FileUpload widget.
         FileUpload upload = new FileUpload();
@@ -67,7 +67,7 @@ public class Main implements EntryPoint {
                 // When the form submission is successfully completed, this event is
                 // fired. Assuming the service returned a response of type text/html,
                 // we can get the result text here (see the FormPanel documentation for
-                // further explanation).
+                // further explanation)
                 Window.alert(event.getResults());
             }
         });
