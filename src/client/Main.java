@@ -11,7 +11,6 @@ import com.google.gwt.user.client.ui.*;
  */
 public class Main implements EntryPoint {
     public void onModuleLoad() {
-        //RootPanel.get().add(new GWTServiceUsageExample());
         // Create a FormPanel and point it at a service.
         final FormPanel form = new FormPanel();
         form.setAction("/myFormHandler");
@@ -71,7 +70,6 @@ public class Main implements EntryPoint {
                 Window.alert(event.getResults());
             }
         });
-
         RootPanel.get().add(form);
     }
 }

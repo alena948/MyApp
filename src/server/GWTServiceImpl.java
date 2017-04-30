@@ -11,5 +11,4 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
     public String myMethod(String s) {
         return "Server says: " + s;
     }
-
 }
