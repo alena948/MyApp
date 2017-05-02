@@ -17,8 +17,8 @@ public class Main implements EntryPoint {
 
         // Because we're going to add a FileUpload widget, we'll need to set the
         // form to use the POST method, and multipart MIME encoding.
-        form.setEncoding(FormPanel.ENCODING_MULTIPART);
-        form.setMethod(FormPanel.METHOD_POST);
+        form.setEncoding(FormPanel.ENCODING_MULTIPART);//способ кодирования отправляемой информации
+        form.setMethod(FormPanel.METHOD_POST);//метод отправки файла
 
         // Create a panel to hold all of the form widgets.
         VerticalPanel panel = new VerticalPanel();
