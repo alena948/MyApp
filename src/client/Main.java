@@ -15,6 +15,7 @@ public class Main implements EntryPoint {
         // Create a FormPanel and point it at a service.
         final FormPanel form = new FormPanel();
         form.setAction("/myFormHandler");
+        form.setAction(GWT.getModuleBaseURL() + "fileupload");
 
         // Because we're going to add a FileUpload widget, we'll need to set the
         // form to use the POST method, and multipart MIME encoding.
@@ -71,7 +72,6 @@ public class Main implements EntryPoint {
                 Window.alert(event.getResults());
             }
         });
-        form.setAction(GWT.getModuleBaseURL() + "fileupload");
         RootPanel.get().add(form);
     }
 }
