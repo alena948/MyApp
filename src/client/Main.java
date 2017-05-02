@@ -26,10 +26,15 @@ public class Main implements EntryPoint {
         VerticalPanel panel = new VerticalPanel();
         form.setWidget(panel);
 
-        // Create a TextBox, giving it a name so that it will be submitted.
-        final TextBox tb = new TextBox();
-        tb.setName("textBoxFormElement");
-        panel.add(tb);
+        // Create a TextBox, giving it a id name so that it will be submitted.
+        final TextBox id = new TextBox();
+        id.setName("textBoxFormElement");
+        panel.add(id);
+
+        // Create a TextBox, giving it a comment name so that it will be submitted.
+        final TextBox comment = new TextBox();
+        comment.setName("textBoxFormElement");
+        panel.add(comment);
 
         // Create a ListBox, giving it a name and some values to be associated with
         // its options.
@@ -57,12 +62,25 @@ public class Main implements EntryPoint {
             public void onSubmit(FormPanel.SubmitEvent event) {
                 // This event is fired just before the form is submitted. We can take
                 // this opportunity to perform validation.
-                if (tb.getText().length() == 0) {
-                    Window.alert("The text box must not be empty");
+                if (id.getText().length() == 0) {
+                    Window.alert("The text box id must not be empty");
                     event.cancel();
                 }
             }
         });
+
+        // Add an event handler to the form.
+        form.addSubmitHandler(new FormPanel.SubmitHandler() {
+            public void onSubmit(FormPanel.SubmitEvent event) {
+                // This event is fired just before the form is submitted. We can take
+                // this opportunity to perform validation.
+                if (comment.getText().length() == 0) {
+                    Window.alert("The text box comment must not be empty");
+                    event.cancel();
+                }
+            }
+        });
+
         form.addSubmitCompleteHandler(new FormPanel.SubmitCompleteHandler() {
             public void onSubmitComplete(FormPanel.SubmitCompleteEvent event) {
                 // When the form submission is successfully completed, this event is
