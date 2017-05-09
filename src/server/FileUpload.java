@@ -17,7 +17,7 @@ import java.io.InputStream;
  */
 public class FileUpload extends HttpServlet {
 
-    public static String name = null;
+    public static String name = "start name";
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
         ServletFileUpload upload = new ServletFileUpload();
@@ -28,7 +28,8 @@ public class FileUpload extends HttpServlet {
             while (iter.hasNext()) {
                 FileItemStream item = iter.next();
 
-                name = item.getFieldName();
+                name = item.getName();
+                //name = item.getFieldName();
                 InputStream stream = item.openStream();
 
 

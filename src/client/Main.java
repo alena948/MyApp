@@ -58,12 +58,13 @@ public class Main implements EntryPoint {
 
         // Create a FileUpload widget.
         FileUpload upload = new FileUpload();
-        upload.setName("uploadFormElement");
+        String fileName = upload.getFilename();
+        upload.setName(fileName);
         panel.add(upload);
 
         // Create an asynchronous callback to handle the result.
-        final AsyncCallback<String> callback = new AsyncCallback<String>() {
-            public void onSuccess(String result) {
+        final AsyncCallback<Void> callback = new AsyncCallback<Void>() {
+            public void onSuccess(Void result) {
                 //lblServerReply.setText(result);
                 Label label = new Label();
                 label.setText("Success");

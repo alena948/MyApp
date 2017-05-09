@@ -7,7 +7,7 @@ import java.sql.*;
  */
 public class DBServer implements DAO {
     public static final String JDBC_DRIVER = "org.postgresql.Driver";
-    public static final String DB_URL = "jdbc:postgresql://localhost:5432/database";//name of DB
+    public static final String DB_URL = "jdbc:postgresql://localhost:5432/postgres";//name of DB
     public static final String USER = "postgres";
     public static final String PASSWORD = "";
 
@@ -30,8 +30,9 @@ public class DBServer implements DAO {
     public void execSql(String sql) throws SQLException {
         getDBConnection();
         Statement statement = getDBConnection().createStatement();
-        ResultSet resultSet = statement.executeQuery(sql);
-        resultSet.close();
+        statement.execute(sql);
+        //ResultSet resultSet = statement.executeQuery(sql);
+        //resultSet.close();
         getDBConnection().close();
     }
 
@@ -69,7 +70,7 @@ public class DBServer implements DAO {
     }
 
     @Override
-    public void editComment(String newComment, int id) throws SQLException {
+    public void editComment(int id, String newComment) throws SQLException {
         String sql = "UPDATE images SET comment = '" + newComment + "' WHERE id = " + id;
         execSql(sql);
     }
