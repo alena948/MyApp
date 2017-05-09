@@ -3,12 +3,24 @@ package server;
 import client.GWTService;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+import java.sql.SQLException;
+
 /**
  * Created by Алёна on 24.03.2017.
  */
-public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
+public class GWTServiceImpl extends RemoteServiceServlet implements GWTService
+{
+    static DAO dao = new DBServer();
 
-    public String myMethod(String s) {
-        return "Server says: " + s;
+    @Override
+    public void saveImage(String id, String comment) {
+        try {
+            Integer int_id = Integer.parseInt(id);
+            dao.addImage(int_id, FileUpload.name);
+            dao.editComment(comment, int_id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
+
 }

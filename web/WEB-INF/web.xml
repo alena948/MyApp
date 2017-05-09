@@ -23,7 +23,7 @@
 
     <servlet-mapping>
         <servlet-name>fileUploaderServlet</servlet-name>
-        <url-pattern>/fileupload</url-pattern>
+        <url-pattern>/Main/fileupload</url-pattern>
     </servlet-mapping>
 
 

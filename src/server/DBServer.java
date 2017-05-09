@@ -27,30 +27,30 @@ public class DBServer implements DAO {
         return connection;
     }
 
-    @Override
-    public void addImage(int id, String name) throws SQLException {
+    public void execSql(String sql) throws SQLException {
         getDBConnection();
-        String sql = "INSERT INTO images(id,name) VALUES (" + id + ", '" + name + "')";
         Statement statement = getDBConnection().createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
         resultSet.close();
         getDBConnection().close();
+    }
+
+    @Override
+    public void addImage(int id, String name) throws SQLException {
+        String sql = "INSERT INTO images(id,name) VALUES (" + id + ", '" + name + "')";
+        execSql(sql);
     }
 
     @Override
     public void deleteImage(int id) throws SQLException {
-        getDBConnection();
         String sql = "DELETE FROM images where id = " + id;
-        Statement statement = getDBConnection().createStatement();
-        ResultSet resultSet = statement.executeQuery(sql);
-        resultSet.close();
-        getDBConnection().close();
+        execSql(sql);
     }
 
     @Override
     public String viewImage(int id) throws SQLException {
-        getDBConnection();
         String sql = "SELECT * FROM images WHERE id = " + id;
+        getDBConnection();
         Statement statement = getDBConnection().createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
         String nameOfImage = "";
@@ -64,21 +64,13 @@ public class DBServer implements DAO {
 
     @Override
     public void deleteComment(int id) throws SQLException {
-        getDBConnection();
         String sql = "UPDATE images SET comment = NULL WHERE id = " + id;
-        Statement statement = getDBConnection().createStatement();
-        ResultSet resultSet = statement.executeQuery(sql);
-        resultSet.close();
-        getDBConnection().close();
+        execSql(sql);
     }
 
     @Override
     public void editComment(String newComment, int id) throws SQLException {
-        getDBConnection();
         String sql = "UPDATE images SET comment = '" + newComment + "' WHERE id = " + id;
-        Statement statement = getDBConnection().createStatement();
-        ResultSet resultSet = statement.executeQuery(sql);
-        resultSet.close();
-        getDBConnection().close();
+        execSql(sql);
     }
 }

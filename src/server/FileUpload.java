@@ -16,6 +16,9 @@ import java.io.InputStream;
  * Created by Алёна on 02.05.2017.
  */
 public class FileUpload extends HttpServlet {
+
+    public static String name = null;
+
     public void doPost(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
         ServletFileUpload upload = new ServletFileUpload();
 
@@ -25,7 +28,7 @@ public class FileUpload extends HttpServlet {
             while (iter.hasNext()) {
                 FileItemStream item = iter.next();
 
-                String name = item.getFieldName();
+                name = item.getFieldName();
                 InputStream stream = item.openStream();
 
 
