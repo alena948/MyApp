@@ -7,7 +7,7 @@ import java.sql.*;
  */
 public class DBServer implements DAO {
     public static final String JDBC_DRIVER = "org.postgresql.Driver";
-    public static final String DB_URL = "jdbc:postgresql://localhost:5432/postgres";//name of DB
+    public static final String DB_URL = "jdbc:postgresql://localhost:5432/postgres";//name of DB in the end
     public static final String USER = "postgres";
     public static final String PASSWORD = "";
 

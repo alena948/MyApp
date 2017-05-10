@@ -1,13 +1,10 @@
 package client;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.server.GwtServletBase;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.i18n.server.GwtLocaleImpl;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 
@@ -38,42 +35,65 @@ public class Main implements EntryPoint {
         form.setMethod(FormPanel.METHOD_POST);//метод отправки файла
 
         // Create a panel to hold all of the form widgets.
-        VerticalPanel panel = new VerticalPanel();
+        final VerticalPanel panel = new VerticalPanel();
+        panel.setSpacing(5);
         form.setWidget(panel);
 
         Label idLabel = new Label("Input image's ID:");
+        final Label fileNameLabel = new Label("Input image's name:");
         Label commentLabel = new Label("Input image's comment:");
 
         panel.add(idLabel);
         // Create a TextBox, giving it a id name so that it will be submitted.
         final TextBox id = new TextBox();
-        id.setName("textBoxFormElement");
+        id.setName("IDTextBoxFormElement");
         panel.add(id);
+
+        panel.add(fileNameLabel);
+        // Create a TextBox, giving it a fileName name so that it will be submitted.
+        final TextBox fileNameBox = new TextBox();
+        fileNameBox.setName("FileNameTextBoxFormElement");
+        panel.add(fileNameBox);
 
         panel.add(commentLabel);
         // Create a TextBox, giving it a comment name so that it will be submitted.
         final TextBox comment = new TextBox();
-        comment.setName("textBoxFormElement");
+        comment.setName("CommentTextBoxFormElement");
         panel.add(comment);
+
+        HorizontalPanel hPanel = new HorizontalPanel();
+        hPanel.setSpacing(10);
+        panel.add(hPanel);
+        //form.setWidget(hPanel);
+
+        Button normalButton = new Button("Normal button", new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                Window.alert("Button pressed!");
+            }
+        });
+        //normalButton.ensureDebugId("cwBasicButton-normal");
+        hPanel.add(normalButton);
 
         // Create a FileUpload widget.
         FileUpload upload = new FileUpload();
-        String fileName = upload.getFilename();
+        final String fileName = upload.getFilename();
         upload.setName(fileName);
         panel.add(upload);
 
         // Create an asynchronous callback to handle the result.
         final AsyncCallback<Void> callback = new AsyncCallback<Void>() {
             public void onSuccess(Void result) {
-                //lblServerReply.setText(result);
-                Label label = new Label();
+                /*Label label = new Label();
                 label.setText("Success");
+                panel.add(label);*/
+                Window.alert("Success");
             }
 
             public void onFailure(Throwable caught) {
-                Label label = new Label();
+                /*Label label = new Label();
                 label.setText("Communication failed");
-                //lblServerReply.setText("Communication failed");
+                panel.add(label);*/
+                Window.alert("Communication failed");
             }
         };
 
@@ -94,8 +114,8 @@ public class Main implements EntryPoint {
                     event.cancel();
                 }
 
-                if (comment.getText().length() == 0) {
-                    Window.alert("The text box comment must not be empty");
+                if (fileNameBox.getText().length() == 0) {
+                    Window.alert("The text box file name must not be empty");
                     event.cancel();
                 }
 
@@ -108,9 +128,11 @@ public class Main implements EntryPoint {
                 // fired. Assuming the service returned a response of type text/html,
                 // we can get the result text here (see the FormPanel documentation for
                 // further explanation)
-                getService().saveImage(id.getText(), comment.getText(), callback);
+                getService().saveImage(Integer.parseInt(id.getText()), fileNameBox.getText(), comment.getText(), callback);
+                //getService().delImage(Integer.parseInt(id.getText()), callback);
             }
         });
+
         RootPanel.get().add(form);
     }
 }
