@@ -9,32 +9,34 @@ import java.sql.SQLException;
  * Created by Алёна on 24.03.2017.
  */
 public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
-    static DAO dao = new DBServer();
+    static PhotoDAO photoDao = new PhotoDAOImpl();
 
     @Override
     public void saveImage(int id, String fileName, String comment) {
         try {
             //Integer int_id = Integer.parseInt(id);
-            dao.addImage(id, fileName);
-            dao.editComment(id, comment);
+            photoDao.addImage(id, fileName);
+            photoDao.editComment(id, comment);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void getImage(int id) {
+    public String getImage(int id) {
+        String nameOfImage = "";
         try {
-            dao.viewImage(id);
+            nameOfImage = photoDao.viewImage(id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return nameOfImage;
     }
 
     @Override
     public void delImage(int id) {
         try {
-            dao.deleteImage(id);
+            photoDao.deleteImage(id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -43,7 +45,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
     @Override
     public void editComm(int id, String comment) {
         try {
-            dao.editComment(id, comment);
+            photoDao.editComment(id, comment);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -52,7 +54,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
     @Override
     public void deleteComm(int id) {
         try {
-            dao.deleteComment(id);
+            photoDao.deleteComment(id);
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -5,7 +5,7 @@ import java.sql.SQLException;
 /**
  * Created by Алёна on 27.04.2017.
  */
-public interface DAO {
+public interface PhotoDAO {
     void addImage(int id, String name) throws SQLException;
     void deleteImage(int id) throws SQLException;
     String viewImage(int id) throws SQLException;//у каждого изображения свой id

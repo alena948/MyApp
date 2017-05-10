@@ -1,5 +1,6 @@
 package client;
 
+import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -114,7 +115,7 @@ public class Main implements EntryPoint {
         hPanel.add(deleteCommentButton);
 
         // Create a FileUpload widget.
-        FileUpload upload = new FileUpload();
+        final FileUpload upload = new FileUpload();
         final String fileName = upload.getFilename();
         upload.setName(fileName);
         panel.add(upload);
@@ -122,6 +123,22 @@ public class Main implements EntryPoint {
         // Create an asynchronous callback to handle the result.
         final AsyncCallback<Void> callback = new AsyncCallback<Void>() {
             public void onSuccess(Void result) {
+                /*Label label = new Label();
+                label.setText("Success");
+                panel.add(label);*/
+                Window.alert("Success");
+            }
+
+            public void onFailure(Throwable caught) {
+                /*Label label = new Label();
+                label.setText("Communication failed");
+                panel.add(label);*/
+                Window.alert("Communication failed");
+            }
+        };
+
+        final AsyncCallback<String> callbackString = new AsyncCallback<String> () {
+            public void onSuccess(String result) {
                 /*Label label = new Label();
                 label.setText("Success");
                 panel.add(label);*/
@@ -162,13 +179,17 @@ public class Main implements EntryPoint {
                         Window.alert("The text box file name must not be empty");
                         event.cancel();
                     }
+                    if (!upload.isAttached()) {
+                        Window.alert("There's no file");
+                        event.cancel();
+                    }
                 }
             });
         }
 
-        if (!isPressAddImageButton[0] && !isPressViewImageButton[0] && !isPressDeleteImageButton[0] &&
-                !isPressEditCommentButton[0] && !isPressDeleteCommentButton[0])
-            Window.alert("Method isn't selected!");
+//        if (!isPressAddImageButton[0] && !isPressViewImageButton[0] && !isPressDeleteImageButton[0] &&
+//                !isPressEditCommentButton[0] && !isPressDeleteCommentButton[0])
+//            Window.alert("Method isn't selected!");
 
         form.addSubmitCompleteHandler(new FormPanel.SubmitCompleteHandler() {
             public void onSubmitComplete(FormPanel.SubmitCompleteEvent event) {
@@ -180,7 +201,7 @@ public class Main implements EntryPoint {
                     getService().saveImage(Integer.parseInt(id.getText()), fileNameBox.getText(), comment.getText(), callback);
                     isPressAddImageButton[0] = false;
                 } else if (isPressViewImageButton[0]) {
-                    getService().getImage(Integer.parseInt(id.getText()), callback);
+                    getService().getImage(Integer.parseInt(id.getText()), callbackString);
                     isPressViewImageButton[0] = false;
                 } else if (isPressDeleteImageButton[0]) {
                     getService().delImage(Integer.parseInt(id.getText()), callback);
@@ -192,6 +213,7 @@ public class Main implements EntryPoint {
                     getService().deleteComm(Integer.parseInt(id.getText()), callback);
                     isPressDeleteCommentButton[0] = false;
                 }
+                Window.alert(event.getResults());
             }
         });
 

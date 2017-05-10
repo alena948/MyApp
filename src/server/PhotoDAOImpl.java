@@ -5,7 +5,7 @@ import java.sql.*;
 /**
  * Created by Алёна on 24.04.2017.
  */
-public class DBServer implements DAO {
+public class PhotoDAOImpl implements PhotoDAO {
     public static final String JDBC_DRIVER = "org.postgresql.Driver";
     public static final String DB_URL = "jdbc:postgresql://localhost:5432/postgres";//name of DB in the end
     public static final String USER = "postgres";
