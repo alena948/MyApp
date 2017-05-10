@@ -24,22 +24,38 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
     @Override
     public void getImage(int id) {
-
+        try {
+            dao.viewImage(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void delImage(int id) {
-
+        try {
+            dao.deleteImage(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void editComm(int id, String comment) {
-
+        try {
+            dao.editComment(id, comment);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void deleteComm(int id) {
-
+        try {
+            dao.deleteComment(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }
