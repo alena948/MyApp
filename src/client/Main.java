@@ -40,8 +40,9 @@ public class Main implements EntryPoint {
         form.setWidget(panel);
 
         Label idLabel = new Label("Input image's ID:");
-        final Label fileNameLabel = new Label("Input image's name:");
+        Label fileNameLabel = new Label("Input image's name:");
         Label commentLabel = new Label("Input image's comment:");
+        Label methodLabel = new Label("Select the desired method:");
 
         panel.add(idLabel);
         // Create a TextBox, giving it a id name so that it will be submitted.
@@ -61,18 +62,56 @@ public class Main implements EntryPoint {
         comment.setName("CommentTextBoxFormElement");
         panel.add(comment);
 
+        panel.add(methodLabel);
         HorizontalPanel hPanel = new HorizontalPanel();
         hPanel.setSpacing(10);
         panel.add(hPanel);
-        //form.setWidget(hPanel);
 
-        Button normalButton = new Button("Normal button", new ClickHandler() {
+        final boolean[] isPressAddImageButton = {false};
+        final boolean[] isPressViewImageButton = {false};
+        final boolean[] isPressDeleteImageButton = {false};
+        final boolean[] isPressEditCommentButton = {false};
+        final boolean[] isPressDeleteCommentButton = {false};
+        //Create buttons
+        Button addImageButton = new Button("Add image", new ClickHandler() {
             public void onClick(ClickEvent event) {
-                Window.alert("Button pressed!");
+                isPressAddImageButton[0] = true;
+                //Window.alert("Button 'add' pressed!");
             }
         });
-        //normalButton.ensureDebugId("cwBasicButton-normal");
-        hPanel.add(normalButton);
+        hPanel.add(addImageButton);
+
+        Button viewImageButton = new Button("View image by ID", new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                isPressViewImageButton[0] = true;
+                //Window.alert("Button 'view' pressed!");
+            }
+        });
+        hPanel.add(viewImageButton);
+
+        Button deleteImageButton = new Button("Delete image by ID", new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                isPressDeleteImageButton[0] = true;
+                //Window.alert("Button 'delete' pressed!");
+            }
+        });
+        hPanel.add(deleteImageButton);
+
+        Button editCommentButton = new Button("Edit comment by ID", new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                isPressEditCommentButton[0] = true;
+                //Window.alert("Button 'edit comment' pressed!");
+            }
+        });
+        hPanel.add(editCommentButton);
+
+        Button deleteCommentButton = new Button("Delete comment by ID", new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                isPressDeleteCommentButton[0] = true;
+                //Window.alert("Button 'delete commit' pressed!");
+            }
+        });
+        hPanel.add(deleteCommentButton);
 
         // Create a FileUpload widget.
         FileUpload upload = new FileUpload();
@@ -113,14 +152,23 @@ public class Main implements EntryPoint {
                     Window.alert("The text box ID must not be empty");
                     event.cancel();
                 }
-
-                if (fileNameBox.getText().length() == 0) {
-                    Window.alert("The text box file name must not be empty");
-                    event.cancel();
-                }
-
             }
         });
+
+        if (isPressAddImageButton[0]) {
+            form.addSubmitHandler(new FormPanel.SubmitHandler() {
+                public void onSubmit(FormPanel.SubmitEvent event) {
+                    if (fileNameBox.getText().length() == 0) {
+                        Window.alert("The text box file name must not be empty");
+                        event.cancel();
+                    }
+                }
+            });
+        }
+
+        if (!isPressAddImageButton[0] && !isPressViewImageButton[0] && !isPressDeleteImageButton[0] &&
+                !isPressEditCommentButton[0] && !isPressDeleteCommentButton[0])
+            Window.alert("Method isn't selected!");
 
         form.addSubmitCompleteHandler(new FormPanel.SubmitCompleteHandler() {
             public void onSubmitComplete(FormPanel.SubmitCompleteEvent event) {
@@ -128,8 +176,22 @@ public class Main implements EntryPoint {
                 // fired. Assuming the service returned a response of type text/html,
                 // we can get the result text here (see the FormPanel documentation for
                 // further explanation)
-                getService().saveImage(Integer.parseInt(id.getText()), fileNameBox.getText(), comment.getText(), callback);
-                //getService().delImage(Integer.parseInt(id.getText()), callback);
+                if (isPressAddImageButton[0]) {
+                    getService().saveImage(Integer.parseInt(id.getText()), fileNameBox.getText(), comment.getText(), callback);
+                    isPressAddImageButton[0] = false;
+                } else if (isPressViewImageButton[0]) {
+                    getService().getImage(Integer.parseInt(id.getText()), callback);
+                    isPressViewImageButton[0] = false;
+                } else if (isPressDeleteImageButton[0]) {
+                    getService().delImage(Integer.parseInt(id.getText()), callback);
+                    isPressDeleteImageButton[0] = false;
+                } else if (isPressEditCommentButton[0]) {
+                    getService().editComm(Integer.parseInt(id.getText()), comment.getText(), callback);
+                    isPressEditCommentButton[0] = false;
+                } else if (isPressDeleteCommentButton[0]) {
+                    getService().deleteComm(Integer.parseInt(id.getText()), callback);
+                    isPressDeleteCommentButton[0] = false;
+                }
             }
         });
 
