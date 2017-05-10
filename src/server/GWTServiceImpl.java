@@ -12,14 +12,34 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
     static DAO dao = new DBServer();
 
     @Override
-    public void saveImage(String id, String comment) {
+    public void saveImage(int id, String comment) {
         try {
-            Integer int_id = Integer.parseInt(id);
-            dao.addImage(int_id, FileUpload.name);
-            dao.editComment(int_id, comment);
+            //Integer int_id = Integer.parseInt(id);
+            dao.addImage(id, FileUpload.name);
+            dao.editComment(id, comment);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void getImage(int id) {
+
+    }
+
+    @Override
+    public void delImage(int id) {
+
+    }
+
+    @Override
+    public void editComm(int id, String comment) {
+
+    }
+
+    @Override
+    public void deleteComm(int id) {
+
     }
 
 }
