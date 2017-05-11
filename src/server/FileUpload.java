@@ -1,6 +1,5 @@
 package server;
 
-import client.Main;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -46,7 +45,7 @@ public class FileUpload extends HttpServlet {
                         break;
                         // throw new Exception("There's no adding file!");
                     System.out.print("Name:" + name + ",Value:" + value);
-                } else {//handling file loads
+                } else {//обработка загрузки файла
                     System.out.println();
                     System.out.println("Loading image...");
                     String fieldName = item.getFieldName();

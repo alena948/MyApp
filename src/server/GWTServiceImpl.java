@@ -1,24 +1,20 @@
 package server;
 
 import client.GWTService;
-import client.Main;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import java.sql.SQLException;
 
 public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
-    static PhotoDAO photoDao = new PhotoDAOImpl();
+    static PhotoDAO photoDAO = new PhotoDAOImpl();
     public static String nameOfViewImage = "";
 
     @Override
     public void saveImage(int id, String fileName, String comment) {
         try {
-            //Integer int_id = Integer.parseInt(id);
-            photoDao.addImage(id, fileName);
-            photoDao.editComment(id, comment);
+            photoDAO.addImage(id, fileName);
+            photoDAO.editComment(id, comment);
         } catch (SQLException e) {
-            //написать communication failed
             e.printStackTrace();
         }
     }
@@ -27,7 +23,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
     public String getImage(int id) {
         String nameOfImage = "";
         try {
-            nameOfImage = photoDao.viewImage(id);
+            nameOfImage = photoDAO.viewImage(id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -38,8 +34,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
     @Override
     public void delImage(int id) {
         try {
-            photoDao.deleteImage(id);
-            //здесь можно удалять фото из папки по путю
+            photoDAO.deleteImage(id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -48,7 +43,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
     @Override
     public void editComm(int id, String comment) {
         try {
-            photoDao.editComment(id, comment);
+            photoDAO.editComment(id, comment);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -57,10 +52,9 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
     @Override
     public void deleteComm(int id) {
         try {
-            photoDao.deleteComment(id);
+            photoDAO.deleteComment(id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
 }

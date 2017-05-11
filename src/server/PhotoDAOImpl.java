@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class PhotoDAOImpl implements PhotoDAO {
     private static final String JDBC_DRIVER = "org.postgresql.Driver";
-    private static final String DB_URL = "jdbc:postgresql://localhost:5432/postgres";//name of DB in the end
+    private static final String DB_URL = "jdbc:postgresql://localhost:5432/postgres";
     private static final String USER = "postgres";
     private static final String PASSWORD = "";
 
@@ -28,8 +28,6 @@ public class PhotoDAOImpl implements PhotoDAO {
         getDBConnection();
         Statement statement = getDBConnection().createStatement();
         statement.execute(sql);
-        //ResultSet resultSet = statement.executeQuery(sql);
-        //resultSet.close();
         getDBConnection().close();
     }
 
