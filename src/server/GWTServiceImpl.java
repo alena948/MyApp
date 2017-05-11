@@ -1,13 +1,11 @@
 package server;
 
 import client.GWTService;
+import client.Main;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import java.sql.SQLException;
 
-/**
- * Created by Алёна on 24.03.2017.
- */
 public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
     static PhotoDAO photoDao = new PhotoDAOImpl();
 
@@ -18,6 +16,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
             photoDao.addImage(id, fileName);
             photoDao.editComment(id, comment);
         } catch (SQLException e) {
+            //написать communication failed
             e.printStackTrace();
         }
     }

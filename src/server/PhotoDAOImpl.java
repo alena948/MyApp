@@ -2,14 +2,11 @@ package server;
 
 import java.sql.*;
 
-/**
- * Created by Алёна on 24.04.2017.
- */
 public class PhotoDAOImpl implements PhotoDAO {
-    public static final String JDBC_DRIVER = "org.postgresql.Driver";
-    public static final String DB_URL = "jdbc:postgresql://localhost:5432/postgres";//name of DB in the end
-    public static final String USER = "postgres";
-    public static final String PASSWORD = "";
+    private static final String JDBC_DRIVER = "org.postgresql.Driver";
+    private static final String DB_URL = "jdbc:postgresql://localhost:5432/postgres";//name of DB in the end
+    private static final String USER = "postgres";
+    private static final String PASSWORD = "";
 
     private static Connection getDBConnection() {
         Connection connection = null;
@@ -27,7 +24,7 @@ public class PhotoDAOImpl implements PhotoDAO {
         return connection;
     }
 
-    public void execSql(String sql) throws SQLException {
+    private void execSql(String sql) throws SQLException {
         getDBConnection();
         Statement statement = getDBConnection().createStatement();
         statement.execute(sql);

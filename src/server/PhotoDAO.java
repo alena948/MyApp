@@ -2,9 +2,6 @@ package server;
 
 import java.sql.SQLException;
 
-/**
- * Created by Алёна on 27.04.2017.
- */
 public interface PhotoDAO {
     void addImage(int id, String name) throws SQLException;
     void deleteImage(int id) throws SQLException;
