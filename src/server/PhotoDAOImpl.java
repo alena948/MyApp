@@ -52,8 +52,8 @@ public class PhotoDAOImpl implements PhotoDAO {
         Statement statement = getDBConnection().createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
         String nameOfImage = "";
-        if (resultSet != null) {
-            nameOfImage = resultSet.getString("name");
+        if (resultSet.next()) {
+            nameOfImage = resultSet.getString(2);
         }
         resultSet.close();
         getDBConnection().close();

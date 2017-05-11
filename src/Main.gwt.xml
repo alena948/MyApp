@@ -6,4 +6,6 @@
 
     <entry-point class='client.Main'/>
 
+    <extend-configuration-property name="document.compatMode" value="BackCompat"/>
+
 </module>

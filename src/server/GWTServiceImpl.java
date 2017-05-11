@@ -2,12 +2,14 @@ package server;
 
 import client.GWTService;
 import client.Main;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import java.sql.SQLException;
 
 public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
     static PhotoDAO photoDao = new PhotoDAOImpl();
+    public static String nameOfViewImage = "";
 
     @Override
     public void saveImage(int id, String fileName, String comment) {
@@ -29,6 +31,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        nameOfViewImage = nameOfImage;
         return nameOfImage;
     }
 
@@ -36,6 +39,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
     public void delImage(int id) {
         try {
             photoDao.deleteImage(id);
+            //здесь можно удалять фото из папки по путю
         } catch (SQLException e) {
             e.printStackTrace();
         }

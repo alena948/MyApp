@@ -1,11 +1,8 @@
 package server;
 
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Label;
+import client.Main;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.FileItemIterator;
-import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FilenameUtils;
@@ -14,10 +11,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
 
@@ -32,6 +27,7 @@ public class FileUpload extends HttpServlet {
             List items = upload.parseRequest(request);
             Iterator iter = items.iterator();
             String fileName = "";
+            boolean isEmptyID = false;
 
             while (iter.hasNext()) {
                 FileItem item = (FileItem) iter.next();
@@ -42,10 +38,13 @@ public class FileUpload extends HttpServlet {
                     String name = item.getFieldName();//возвращает имя поля в форме
                     String value = item.getString();//возвращает содержимое файла в виде строки,
                     // используя кодировку по умолчанию
-                    if (name.equals("FileNameTextBoxFormElement")) {
-                        fileName = value;
-                        //System.out.println("Wrote fileName: " + fileName);
-                    }
+                    if (name.equals("IDTextBoxFormElement") && value.equals(""))
+                        isEmptyID = true;
+                    if (name.equals("FileNameTextBoxFormElement") && (!value.equals("")) && !isEmptyID) {
+                        fileName = value + ".jpeg";
+                    } else if (name.equals("FileNameTextBoxFormElement") && value.equals("") || isEmptyID)
+                        break;
+                        // throw new Exception("There's no adding file!");
                     System.out.print("Name:" + name + ",Value:" + value);
                 } else {//handling file loads
                     System.out.println();

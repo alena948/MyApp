@@ -1,6 +1,8 @@
 package client;
 
 import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.event.dom.client.ErrorEvent;
+import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -8,6 +10,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
+import server.GWTServiceImpl;
 
 public class Main implements EntryPoint {
 
@@ -80,22 +83,14 @@ public class Main implements EntryPoint {
         Button addImageButton = new Button("Add image", new ClickHandler() {
             public void onClick(ClickEvent event) {
                 isPressAddImageButton[0] = true;
-                isPressViewImageButton[0] = false;
-                isPressDeleteImageButton[0] = false;
-                isPressEditCommentButton[0] = false;
-                isPressDeleteCommentButton[0] = false;
                 //Window.alert("Button 'add' pressed!");
             }
         });
         hPanel.add(addImageButton);
 
-        Button viewImageButton = new Button("View image by ID", new ClickHandler() {
+        Button viewImageButton = new Button("View image by name", new ClickHandler() {
             public void onClick(ClickEvent event) {
-                isPressAddImageButton[0] = false;
                 isPressViewImageButton[0] = true;
-                isPressDeleteImageButton[0] = false;
-                isPressEditCommentButton[0] = false;
-                isPressDeleteCommentButton[0] = false;
                 //Window.alert("Button 'view' pressed!");
             }
         });
@@ -103,11 +98,7 @@ public class Main implements EntryPoint {
 
         Button deleteImageButton = new Button("Delete image by ID", new ClickHandler() {
             public void onClick(ClickEvent event) {
-                isPressAddImageButton[0] = false;
-                isPressViewImageButton[0] = false;
                 isPressDeleteImageButton[0] = true;
-                isPressEditCommentButton[0] = false;
-                isPressDeleteCommentButton[0] = false;
                 //Window.alert("Button 'delete' pressed!");
             }
         });
@@ -115,11 +106,7 @@ public class Main implements EntryPoint {
 
         Button editCommentButton = new Button("Edit comment by ID", new ClickHandler() {
             public void onClick(ClickEvent event) {
-                isPressAddImageButton[0] = false;
-                isPressViewImageButton[0] = false;
-                isPressDeleteImageButton[0] = false;
                 isPressEditCommentButton[0] = true;
-                isPressDeleteCommentButton[0] = false;
                 //Window.alert("Button 'edit comment' pressed!");
             }
         });
@@ -127,10 +114,6 @@ public class Main implements EntryPoint {
 
         Button deleteCommentButton = new Button("Delete comment by ID", new ClickHandler() {
             public void onClick(ClickEvent event) {
-                isPressAddImageButton[0] = false;
-                isPressViewImageButton[0] = false;
-                isPressDeleteImageButton[0] = false;
-                isPressEditCommentButton[0] = false;
                 isPressDeleteCommentButton[0] = true;
                 //Window.alert("Button 'delete commit' pressed!");
             }
@@ -170,9 +153,11 @@ public class Main implements EntryPoint {
             public void onSubmit(FormPanel.SubmitEvent event) {
                 // This event is fired just before the form is submitted. We can take
                 // this opportunity to perform validation.
-                if (id.getText().length() == 0) {
-                    Window.alert("The text box ID must not be empty");
-                    event.cancel();
+                if (!isPressViewImageButton[0]) {
+                    if (id.getText().length() == 0) {
+                        Window.alert("The text box ID must not be empty");
+                        event.cancel();
+                    }
                 }
                 if (isPressAddImageButton[0]) {
                     if (fileNameBox.getText().length() == 0) {
@@ -190,6 +175,7 @@ public class Main implements EntryPoint {
             }
         });
 
+        final String pathToImage = "C:\\Users\\Алёна\\.IntelliJIdea2016.3\\system\\gwt\\PhotoAlbum.fa65ba4c\\MyApp.3d7e65c6\\run\\www\\uploadedFiles\\";
         form.addSubmitCompleteHandler(new FormPanel.SubmitCompleteHandler() {
             public void onSubmitComplete(FormPanel.SubmitCompleteEvent event) {
                 // When the form submission is successfully completed, this event is
@@ -198,9 +184,12 @@ public class Main implements EntryPoint {
                 // further explanation)
                 if (isPressAddImageButton[0]) {
                     getService().saveImage(Integer.parseInt(id.getText()), fileNameBox.getText(), comment.getText(), callback);
+                    //getService().getImage(Integer.parseInt(id.getText()), callbackString);
                     isPressAddImageButton[0] = false;
                 } else if (isPressViewImageButton[0]) {
-                    getService().getImage(Integer.parseInt(id.getText()), callbackString);
+                    panel.add(new HTML("<body><p><img src = " + pathToImage + fileNameBox.getText() + " alt = ''></p></body>"));
+                    Window.alert("Path: " + pathToImage + fileNameBox.getText() + ".jpeg");
+                    //panel.add(image);
                     isPressViewImageButton[0] = false;
                 } else if (isPressDeleteImageButton[0]) {
                     getService().delImage(Integer.parseInt(id.getText()), callback);
